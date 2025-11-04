@@ -17,7 +17,6 @@
       text-shadow: 2px 2px #ffb6c1;
     }
 
-    /* Efecto CRT */
     body::after {
       content: '';
       position: fixed;
@@ -33,7 +32,6 @@
       z-index: 10;
     }
 
-    /* Corazones animados */
     .hearts {
       position: fixed;
       top: 0;
@@ -56,9 +54,8 @@
       }
     }
 
-    /* Pantallas */
     .screen {
-      display: none;
+      display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
@@ -68,67 +65,7 @@
       z-index: 2;
       padding: 20px;
     }
-    .active {
-      display: flex;
-    }
 
-    /* Pantalla de contraseña */
-    .password-screen h2 {
-      color: #b3005e;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px #fff;
-      animation: blink 1.2s steps(2, start) infinite;
-    }
-    @keyframes blink {
-      to { visibility: hidden; }
-    }
-
-    .password-img {
-      width: 260px;
-      height: auto;
-      border: 4px solid #b3005e;
-      image-rendering: pixelated;
-      box-shadow: 6px 6px 0 #ff99b6;
-      margin-bottom: 20px;
-    }
-
-    /* Teclado retro */
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 70px);
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-    .key {
-      background: #ffe3ed;
-      border: 3px solid #b3005e;
-      border-radius: 5px;
-      font-size: 14px;
-      padding: 15px;
-      cursor: pointer;
-      transition: all 0.1s ease;
-      box-shadow: 3px 3px 0 #ff99b6;
-    }
-    .key:hover {
-      background-color: #ffccdc;
-      transform: translateY(-3px);
-    }
-
-    .input-display {
-      font-size: 20px;
-      margin-top: 15px;
-      letter-spacing: 10px;
-      color: #b3005e;
-      font-weight: bold;
-      background: #fff;
-      border: 3px solid #b3005e;
-      padding: 10px;
-      display: inline-block;
-      box-shadow: 4px 4px 0 #ff99b6;
-    }
-
-    /* Nota */
     .notepad {
       background: #fff5f7;
       border: 4px solid #b3005e;
@@ -178,53 +115,29 @@
 
 <div class="hearts"></div>
 
-<!-- Pantalla de contraseña -->
-<div id="passwordScreen" class="screen password-screen active">
-  <img src="https://static.vecteezy.com/system/resources/previews/021/340/522/non_2x/giving-flowers-as-present-concept-hand-of-businessman-holding-red-fresh-blossom-rose-flower-giving-as-gift-to-someone-illustration-free-vector.jpg" 
-       alt="Imagen decorativa" class="password-img">
-  <h2>🔒 CUANDO NOS HICIMOS NOVIOS?</h2>
-  <div class="input-display" id="inputDisplay">••••</div>
-  <div class="keypad">
-    <button class="key" onclick="enterDigit('1')">1</button>
-    <button class="key" onclick="enterDigit('2')">2</button>
-    <button class="key" onclick="enterDigit('3')">3</button>
-    <button class="key" onclick="enterDigit('4')">4</button>
-    <button class="key" onclick="enterDigit('5')">5</button>
-    <button class="key" onclick="enterDigit('6')">6</button>
-    <button class="key" onclick="enterDigit('7')">7</button>
-    <button class="key" onclick="enterDigit('8')">8</button>
-    <button class="key" onclick="enterDigit('9')">9</button>
-    <button class="key" onclick="checkPassword()">✔</button>
-    <button class="key" onclick="enterDigit('0')">0</button>
-    <button class="key" onclick="deleteLast()">⌫</button>
-  </div>
-</div>
-
-<!-- Pantalla de nota -->
+<!-- Pantalla directa de la carta -->
 <div id="notepadScreen" class="screen">
   <div class="notepad">
-    <img src="data:image/jpeg;base64,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"
+    <img src="https://static.vecteezy.com/system/resources/previews/021/340/522/non_2x/giving-flowers-as-present-concept-hand-of-businessman-holding-red-fresh-blossom-rose-flower-giving-as-gift-to-someone-illustration-free-vector.jpg" 
          alt="imagen" class="note-img">
 
     <h3>📅 02 NOV 2025</h3>
     <h4>💖 MI QUERIDA LUCIANA</h4>
 
     <p>
-    Quiero decirte esto a travez de la forma en que un programador lo hace a travez de una pagina
-    porque quiero que sepas que cada linea de codigo, cada pixel y cada detalle fue pensado con mucho cariño
+    Quiero decirte esto a través de la forma en que un programador lo hace, a través de una página,
+    porque quiero que sepas que cada línea de código, cada píxel y cada detalle fue pensado con mucho cariño
     para ti. Eres una persona increíble y mereces todo lo mejor en la vida.
     </p>
     <p>
-    La verdad te agradezo mucho el que hayas llegado a mi vida porque desde que llegaste todo a cambiado
-    y eres lo mejor que me a pasado, se que te lo digo muchas veces pero simplemente no quiero perderte
-    si llego a hacer algo mal dime, ahora estoy mas seguro de que tu eres la persona con la que quiero
-    estar el resto de mis dias, no dejare de reafirmar mi cariño y amor hacia a ti.🌷
+    La verdad te agradezco mucho el que hayas llegado a mi vida, porque desde que llegaste todo ha cambiado
+    y eres lo mejor que me ha pasado. Sé que te lo digo muchas veces, pero simplemente no quiero perderte.
+    Si llego a hacer algo mal, dímelo. Ahora estoy más seguro de que tú eres la persona con la que quiero
+    estar el resto de mis días. No dejaré de reafirmar mi cariño y amor hacia ti. 🌷
     </p>
     <p>
     Te ama y te quiere mucho tu novio 💖
     </p>
-
-    <button class="back-btn" onclick="goBack()">🔙 VOLVER</button>
   </div>
 </div>
 
@@ -244,48 +157,7 @@
     }, 500);
   }
   crearCorazones();
-
-  // Contraseña correcta
-  const correctPassword = '2809';
-  let input = '';
-
-  function enterDigit(digit) {
-    if (input.length < 4) {
-      input += digit;
-      updateDisplay();
-    }
-  }
-
-  function deleteLast() {
-    input = input.slice(0, -1);
-    updateDisplay();
-  }
-
-  function updateDisplay() {
-    document.getElementById('inputDisplay').textContent = input.padEnd(4, '•');
-  }
-
-  function checkPassword() {
-    if (input.length === 4) {
-      if (input === correctPassword) {
-        document.getElementById('passwordScreen').classList.remove('active');
-        document.getElementById('notepadScreen').classList.add('active');
-      } else {
-        alert('❌ CONTRASEÑA INCORRECTA');
-        input = '';
-        updateDisplay();
-      }
-    } else {
-      alert('DEBES INGRESAR 4 DÍGITOS');
-    }
-  }
-
-  function goBack() {
-    document.getElementById('notepadScreen').classList.remove('active');
-    document.getElementById('passwordScreen').classList.add('active');
-    input = '';
-    updateDisplay();
-  }
 </script>
+
 </body>
 </html>
