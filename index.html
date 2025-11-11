@@ -1,163 +1,183 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Carta Especial 💌</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>💖 Para mi querida Luciana 💖</title>
+    <style>
     body {
-      font-family: 'Press Start 2P', cursive;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #ffe5ec, #ffcce0);
-      overflow-x: hidden;
-      color: #b3005e;
-      text-shadow: 2px 2px #ffb6c1;
+        margin: 0;
+        height: 100vh;
+        background: radial-gradient(circle at center, #1a0028 0%, #0b0012 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif;
+        color: white;
+        text-align: center;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: repeating-linear-gradient(
-        rgba(255,255,255,0.03) 0px,
-        rgba(255,255,255,0.03) 1px,
-        transparent 2px,
-        transparent 4px
-      );
-      pointer-events: none;
-      z-index: 10;
+    .main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
     }
 
-    .hearts {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+    .image-container, .heart-container {
+        position: relative;
+        width: 280px;
+        height: 250px;
     }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 10px;
+    }
+
     .heart {
-      position: absolute;
-      animation: fall linear forwards;
-      color: rgba(255, 100, 150, 0.7);
-      text-shadow: 1px 1px #ff99b6;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: red;
+        transform: rotate(45deg);
+        animation: float 4s infinite ease-in-out;
         opacity: 0;
-      }
     }
 
-    .screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      flex-direction: column;
-      position: relative;
-      z-index: 2;
-      padding: 20px;
+    .heart::before,
+    .heart::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: red;
+        border-radius: 50%;
     }
 
-    .notepad {
-      background: #fff5f7;
-      border: 4px solid #b3005e;
-      padding: 25px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 520px;
-      box-shadow: 6px 6px 0 #ff99b6;
-    }
-    .notepad h3, .notepad h4 {
-      margin: 5px 0;
-      color: #b3005e;
-    }
-    .notepad p {
-      text-align: justify;
-      line-height: 1.6;
-      font-size: 10px;
+    .heart::before { top: -8px; left: 0; }
+    .heart::after { left: -8px; top: 0; }
+
+    @keyframes float {
+        0% { transform: scale(0) rotate(45deg); opacity: 0; }
+        40% { opacity: 1; }
+        100% { transform: scale(1) rotate(45deg); opacity: 1; }
     }
 
-    .note-img {
-      width: 100%;
-      max-width: 450px;
-      border: 3px solid #b3005e;
-      box-shadow: 5px 5px 0 #ff99b6;
-      margin-bottom: 15px;
+    h4 {
+        font-size: 30px;
+        margin-top: 30px;
+        color: #ff7aa5;
+        text-shadow: 0 0 15px #ff4d88;
     }
 
-    .back-btn {
-      background-color: #ffd6e0;
-      border: 3px solid #b3005e;
-      padding: 10px 25px;
-      font-size: 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      box-shadow: 4px 4px 0 #ff99b6;
-      transition: all 0.2s ease;
-      margin-top: 15px;
-    }
-    .back-btn:hover {
-      background-color: #ffb6c1;
-      transform: translateY(-3px);
+    .message {
+        max-width: 800px;
+        font-size: 18px;
+        line-height: 1.6;
+        text-align: justify;
+        opacity: 0;
+        white-space: pre-wrap;
+        border-right: 2px solid white;
+        overflow: hidden;
+        margin-top: 15px;
     }
 
-  </style>
-</head>
-<body>
+    @media (max-width: 700px) {
+        .main { flex-direction: column; }
+        h4 { font-size: 24px; }
+        .message { font-size: 16px; }
+    }
+    </style>
+    </head>
+    <body>
+    <div class="main">
+        <div class="image-container">
+        <canvas id="canvas" width="280" height="250"></canvas>
+        </div>
+        <div class="heart-container" id="heart-container"></div>
+    </div>
 
-<div class="hearts"></div>
+    <h4>💖 MI QUERIDA LUCIANA 💖</h4>
+    <div class="message" id="message"></div>
 
-<!-- Pantalla directa de la carta -->
-<div id="notepadScreen" class="screen">
-  <div class="notepad">
-    <img src="https://static.vecteezy.com/system/resources/previews/021/340/522/non_2x/giving-flowers-as-present-concept-hand-of-businessman-holding-red-fresh-blossom-rose-flower-giving-as-gift-to-someone-illustration-free-vector.jpg" 
-         alt="imagen" class="note-img">
+    <script>
+    // --- CORAZONES A LA DERECHA ---
+    const heartContainer = document.getElementById('heart-container');
+    for (let i = 0; i < 250; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        const t = Math.PI - (Math.random() * 2 * Math.PI);
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        heart.style.left = 140 + x * 8 + 'px';
+        heart.style.top = 125 + y * 8 + 'px';
+        heart.style.background = `hsl(${Math.random() * 20 + 340}, 90%, 60%)`;
+        heart.style.animationDelay = `${Math.random() * 2}s`;
+        heartContainer.appendChild(heart);
+    }
 
-    <h3>📅 02 NOV 2025</h3>
-    <h4>💖 MI QUERIDA LUCIANA</h4>
+    // --- DIBUJAR IMAGEN CON PUNTOS ---
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.src = "WhatsApp Image 2025-11-08 at 21.50.33.jpeg"; // asegúrate que esté en la misma carpeta
 
-    <p>
-    Quiero decirte esto a través de la forma en que un programador lo hace, a través de una página,
-    porque quiero que sepas que cada línea de código, cada píxel y cada detalle fue pensado con mucho cariño
-    para ti. Eres una persona increíble y mereces todo lo mejor en la vida.
-    </p>
-    <p>
-    La verdad te agradezco mucho el que hayas llegado a mi vida, porque desde que llegaste todo ha cambiado
-    y eres lo mejor que me ha pasado. Sé que te lo digo muchas veces, pero simplemente no quiero perderte.
-    Si llego a hacer algo mal, dímelo. Ahora estoy más seguro de que tú eres la persona con la que quiero
-    estar el resto de mis días. No dejaré de reafirmar mi cariño y amor hacia ti. 🌷
-    </p>
-    <p>
-    Te ama y te quiere mucho tu novio 💖
-    </p>
-  </div>
-</div>
+    img.onload = function() {
+        const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-<script>
-  // Efecto de corazones
-  function crearCorazones() {
-    const heartsContainer = document.querySelector('.hearts');
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.textContent = '❤';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
-    }, 500);
-  }
-  crearCorazones();
-</script>
+        const density = 4;
+        for (let i = 0; i < canvas.height; i += density) {
+        for (let j = 0; j < canvas.width; j += density) {
+            const index = (i * canvas.width + j) * 4;
+            const r = imageData[index];
+            const g = imageData[index + 1];
+            const b = imageData[index + 2];
+            ctx.fillStyle = `rgb(${r},${g},${b})`;
+            ctx.beginPath();
+            ctx.arc(j, i, density / 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        }
+    };
 
-</body>
-</html>
+    // --- TEXTO CON EFECTO DE ESCRITURA ---
+    const texto = `Quiero decirte esto a través de la forma en que un programador lo hace, a través de una página,
+    porque quiero que sepas que cada línea de código, cada píxel y cada detalle fue pensado con mucho cariño para ti.
+    Eres una persona increíble y mereces todo lo mejor en la vida.
+
+    La verdad te agradezco mucho el que hayas llegado a mi vida, porque desde que llegaste todo ha cambiado y eres lo mejor que me ha pasado.
+    Sé que te lo digo muchas veces, pero simplemente no quiero perderte.
+    Si llego a hacer algo mal, dímelo.
+    Ahora estoy más seguro de que tú eres la persona con la que quiero estar el resto de mis días.
+    No dejaré de reafirmar mi cariño y amor hacia ti. 🌷
+
+    Te ama y te quiere mucho tu novio 💖`;
+
+    const message = document.getElementById('message');
+    let i = 0;
+
+    setTimeout(() => {
+        message.style.opacity = 1;
+        const interval = setInterval(() => {
+        message.textContent = texto.substring(0, i);
+        i++;
+        if (i > texto.length) {
+            clearInterval(interval);
+            message.style.borderRight = 'none';
+        }
+        }, 40);
+    }, 3500);
+    </script>
+    </body>
+    </html>
