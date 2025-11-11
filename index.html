@@ -1,183 +1,136 @@
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>💖 Para mi querida Luciana 💖</title>
-    <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background: radial-gradient(circle at center, #1a0028 0%, #0b0012 100%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        font-family: "Poppins", sans-serif;
-        color: white;
-        text-align: center;
-    }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>💖 Para mi querida Luciana 💖</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #1a0028 0%, #0b0012 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: hidden;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+  }
 
-    .main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-        flex-wrap: wrap;
-    }
+  .heart-container {
+    position: relative;
+    width: 80%;
+    max-width: 220px;
+    aspect-ratio: 1 / 1;
+    margin-top: 30px;
+  }
 
-    .image-container, .heart-container {
-        position: relative;
-        width: 280px;
-        height: 250px;
-    }
+  .heart {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 4s infinite ease-in-out;
+    opacity: 0;
+  }
 
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        border-radius: 10px;
-    }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+  }
 
-    .heart {
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        background: red;
-        transform: rotate(45deg);
-        animation: float 4s infinite ease-in-out;
-        opacity: 0;
-    }
+  .heart::before { top: -5px; left: 0; }
+  .heart::after { left: -5px; top: 0; }
 
-    .heart::before,
-    .heart::after {
-        content: "";
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        background: red;
-        border-radius: 50%;
-    }
+  @keyframes float {
+    0% { transform: scale(0) rotate(45deg); opacity: 0; }
+    40% { opacity: 1; }
+    100% { transform: scale(1) rotate(45deg); opacity: 1; }
+  }
 
-    .heart::before { top: -8px; left: 0; }
-    .heart::after { left: -8px; top: 0; }
+  h4 {
+    font-size: 1.6rem;
+    margin-top: 25px;
+    color: #ff7aa5;
+    text-shadow: 0 0 15px #ff4d88;
+  }
 
-    @keyframes float {
-        0% { transform: scale(0) rotate(45deg); opacity: 0; }
-        40% { opacity: 1; }
-        100% { transform: scale(1) rotate(45deg); opacity: 1; }
-    }
+  .message {
+    max-width: 90%;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify;
+    opacity: 0;
+    white-space: pre-wrap;
+    border-right: 2px solid white;
+    overflow: hidden;
+    margin-top: 15px;
+  }
 
-    h4 {
-        font-size: 30px;
-        margin-top: 30px;
-        color: #ff7aa5;
-        text-shadow: 0 0 15px #ff4d88;
-    }
+  @media (min-width: 768px) {
+    h4 { font-size: 1.8rem; }
+    .message { font-size: 18px; max-width: 700px; }
+  }
+</style>
+</head>
+<body>
+  <div class="heart-container" id="heart-container"></div>
 
-    .message {
-        max-width: 800px;
-        font-size: 18px;
-        line-height: 1.6;
-        text-align: justify;
-        opacity: 0;
-        white-space: pre-wrap;
-        border-right: 2px solid white;
-        overflow: hidden;
-        margin-top: 15px;
-    }
+  <h4>💖 MI QUERIDA LUCIANA 💖</h4>
+  <div class="message" id="message"></div>
 
-    @media (max-width: 700px) {
-        .main { flex-direction: column; }
-        h4 { font-size: 24px; }
-        .message { font-size: 16px; }
-    }
-    </style>
-    </head>
-    <body>
-    <div class="main">
-        <div class="image-container">
-        <canvas id="canvas" width="280" height="250"></canvas>
-        </div>
-        <div class="heart-container" id="heart-container"></div>
-    </div>
-
-    <h4>💖 MI QUERIDA LUCIANA 💖</h4>
-    <div class="message" id="message"></div>
-
-    <script>
-    // --- CORAZONES A LA DERECHA ---
+  <script>
+    // --- CORAZÓN FORMADO POR PUNTOS DE COLORES ---
     const heartContainer = document.getElementById('heart-container');
-    for (let i = 0; i < 250; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        const t = Math.PI - (Math.random() * 2 * Math.PI);
-        const x = 16 * Math.pow(Math.sin(t), 3);
-        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-        heart.style.left = 140 + x * 8 + 'px';
-        heart.style.top = 125 + y * 8 + 'px';
-        heart.style.background = `hsl(${Math.random() * 20 + 340}, 90%, 60%)`;
-        heart.style.animationDelay = `${Math.random() * 2}s`;
-        heartContainer.appendChild(heart);
+    for (let i = 0; i < 200; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      const t = Math.PI - (Math.random() * 2 * Math.PI);
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      heart.style.left = 50 + x * 4.5 + '%';  // antes era 6
+      heart.style.top = 50 + y * 4.5 + '%';   // antes era 6
+      heart.style.background = `hsl(${Math.random() * 20 + 340}, 90%, 60%)`;
+      heart.style.animationDelay = `${Math.random() * 2}s`;
+      heartContainer.appendChild(heart);
     }
-
-    // --- DIBUJAR IMAGEN CON PUNTOS ---
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.src = "WhatsApp Image 2025-11-08 at 21.50.33.jpeg"; // asegúrate que esté en la misma carpeta
-
-    img.onload = function() {
-        const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
-        const x = (canvas.width / 2) - (img.width / 2) * scale;
-        const y = (canvas.height / 2) - (img.height / 2) * scale;
-        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const density = 4;
-        for (let i = 0; i < canvas.height; i += density) {
-        for (let j = 0; j < canvas.width; j += density) {
-            const index = (i * canvas.width + j) * 4;
-            const r = imageData[index];
-            const g = imageData[index + 1];
-            const b = imageData[index + 2];
-            ctx.fillStyle = `rgb(${r},${g},${b})`;
-            ctx.beginPath();
-            ctx.arc(j, i, density / 2, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        }
-    };
 
     // --- TEXTO CON EFECTO DE ESCRITURA ---
     const texto = `Quiero decirte esto a través de la forma en que un programador lo hace, a través de una página,
-    porque quiero que sepas que cada línea de código, cada píxel y cada detalle fue pensado con mucho cariño para ti.
-    Eres una persona increíble y mereces todo lo mejor en la vida.
+porque quiero que sepas que cada línea de código, cada píxel y cada detalle fue pensado con mucho cariño para ti.
+Eres una persona increíble y mereces todo lo mejor en la vida.
 
-    La verdad te agradezco mucho el que hayas llegado a mi vida, porque desde que llegaste todo ha cambiado y eres lo mejor que me ha pasado.
-    Sé que te lo digo muchas veces, pero simplemente no quiero perderte.
-    Ahora estoy más seguro de que tú eres la persona con la que quiero estar el resto de mis días.
-    No dejaré de reafirmar mi cariño y amor hacia ti. 🌷
+La verdad te agradezco mucho el que hayas llegado a mi vida, porque desde que llegaste todo ha cambiado y eres lo mejor que me ha pasado.
+Sé que te lo digo muchas veces, pero simplemente no quiero perderte.
+Si llego a hacer algo mal, dímelo.
+Ahora estoy más seguro de que tú eres la persona con la que quiero estar el resto de mis días.
+No dejaré de reafirmar mi cariño y amor hacia ti. 🌷
 
-    Te ama y te quiere mucho tu novio 💖`;
+Te ama y te quiere mucho tu novio 💖`;
 
     const message = document.getElementById('message');
     let i = 0;
 
     setTimeout(() => {
-        message.style.opacity = 1;
-        const interval = setInterval(() => {
+      message.style.opacity = 1;
+      const interval = setInterval(() => {
         message.textContent = texto.substring(0, i);
         i++;
         if (i > texto.length) {
-            clearInterval(interval);
-            message.style.borderRight = 'none';
+          clearInterval(interval);
+          message.style.borderRight = 'none';
         }
-        }, 40);
-    }, 3500);
-    </script>
-    </body>
-    </html>
-
+      }, 40);
+    }, 3000);
+  </script>
+</body>
+</html>
