@@ -1,174 +1,325 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Carta de Perdón</title>
-<style>
-    body {
-        background: #f5e9ff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: "Segoe UI", sans-serif;
-    }
-
-    .sobre {
-        position: relative;
-        width: 300px;
-        height: 200px;
-        background: #d18df0;
-        border-radius: 10px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        cursor: pointer;
-        transition: transform .3s ease;
-    }
-
-    .sobre:hover {
-        transform: scale(1.05);
-    }
-
-    .tapa {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50%;
-        background: #c774eb;
-        clip-path: polygon(0 0, 100% 0, 50% 100%);
-        transform-origin: top;
-        transition: transform 1s ease;
-    }
-
-    .carta {
-        position: absolute;
-        top: 40px;
-        left: 15px;
-        width: 270px;
-        height: 160px;
-        background: white;
-        border-radius: 5px;
-        padding: 20px;
-        box-sizing: border-box;
-        text-align: center;
-        transform: translateY(100%);
-        transition: transform 1s ease;
-        font-size: 18px;
-        line-height: 1.5;
-        opacity: 0;
-    }
-
-    .sobre.abierto .tapa {
-        transform: rotateX(180deg);
-    }
-
-    .sobre.abierto .carta {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    /* --- CORAZÓN --- */
-    .corazon {
-        position: absolute;
-        top: 110px; 
-        left: 50%;
-        transform: translateX(-50%) scale(0);
-        font-size: 40px;
-        color: red;
-        opacity: 0;
-        transition: opacity .5s;
-    }
-
-    .corazon.animar {
-        animation: subir 2.5s ease forwards;
-    }
-
-    @keyframes subir {
-        0% {
-            transform: translateX(-50%) translateY(0) scale(0.3);
-            opacity: 0;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastel Kawaii Interactivo para mi Mejor Amiga</title>
+    <style>
+        /* 🌸 Variables Kawaii y Animaciones (Mantenidas) */
+        :root {
+            --cake-width: 250px;
+            --cake-height: 180px; 
+            --body-color: #FFB3C1; 
+            --icing-color: #FFFFFF; 
+            --sprinkle-color-1: #98F5E1; 
+            --sprinkle-color-2: #FFE898; 
+            --sprinkle-color-3: #B5B9FF; 
+            --flame-color: #FFC300;
+            --candle-color: #FFDBA6; 
+            --flame-glow: hsl(40, 100%, 75%);
+            --eye: #333333;
+            --tongue: #FF69B4; 
+            --blush: rgba(255, 150, 150, 0.5); 
+            --lightness: 50;
         }
-        40% {
-            transform: translateX(-50%) translateY(-30px) scale(1);
+
+        /* 🎀 Estilos Generales */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #F0F8FF;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        /* 🍰 Contenedor del Pastel */
+        .birthday-cake {
+            position: relative;
+            width: var(--cake-width);
+            height: var(--cake-height);
+        }
+
+        /* 🎂 Cuerpo del Pastel Kawaii */
+        .cake-body {
+            background-color: var(--body-color);
+            width: 100%;
+            height: 100%;
+            border-radius: 40px; 
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 0 rgba(0, 0, 0, 0.1);
+            border: 5px solid var(--icing-color); 
+            box-sizing: border-box;
+        }
+
+        .cake-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background-color: var(--icing-color);
+            border-radius: 40px 40px 0 0;
+        }
+
+        /* 🤩 Rostro y Rubor (Mantenidos) */
+        .face {
+            position: absolute;
+            top: 55%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.5s; /* Para el efecto de "sorpresa" o "alegría" al apagarse */
+        }
+
+        .eye {
+            width: 10px;
+            height: 12px;
+            background: var(--eye);
+            border-radius: 50%;
+            margin: 0 10px;
+            position: absolute;
+            top: -10px;
+            animation: blink 4s infinite;
+        }
+
+        .eye-left { left: -25px; }
+        .eye-right { right: -25px; }
+
+        .face::before, .face::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 8px;
+            background: var(--blush);
+            border-radius: 50%;
+            top: 5px;
+        }
+
+        .face::before { left: -40px; }
+        .face::after { right: -40px; }
+
+        .mouth {
+            width: 25px;
+            height: 10px;
+            border: 2px solid var(--eye);
+            border-top: none;
+            border-radius: 0 0 15px 15px;
+            position: relative;
+            top: 5px;
+            overflow: hidden;
+        }
+
+        .mouth::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 4px;
+            background: var(--tongue);
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* ✨ Chispas y Velas (Mantenidas) */
+        .sprinkle { /* ...estilos de chispas... */ }
+        .sprinkle:nth-child(1) { top: 10px; left: 30px; background: var(--sprinkle-color-1); }
+        .sprinkle:nth-child(2) { top: 25px; right: 50px; background: var(--sprinkle-color-2); }
+        .sprinkle:nth-child(3) { bottom: 15px; left: 100px; background: var(--sprinkle-color-3); }
+        .sprinkle:nth-child(4) { top: 40px; left: 180px; background: var(--sprinkle-color-1); }
+        .sprinkle:nth-child(5) { top: 60px; left: 20px; background: var(--sprinkle-color-2); }
+        .sprinkle:nth-child(6) { bottom: 5px; right: 20px; background: var(--sprinkle-color-3); }
+        
+        .candles {
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .candle {
+            width: 15px;
+            height: 45px;
+            background: var(--candle-color);
+            border-radius: 5px;
+            position: relative;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 🕯️ Flama de la Vela - IMPORTANTE */
+        .flame {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 18px;
+            background: var(--flame-color);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 10px 5px var(--flame-glow);
+            animation: flicker 0.5s infinite alternate;
+            transition: opacity 0.3s; /* Para que se apague suavemente */
+        }
+
+        /* Clase para apagar las velas */
+        .flame.off {
+            opacity: 0;
+            box-shadow: none;
+            transform: translateX(-50%) translateY(0) scaleY(0.1);
+        }
+        
+        /* 💫 Animaciones (Mantenidas) */
+        @keyframes blink {
+            0%, 40%, 45%, 100% { transform: scaleY(1); }
+            42%, 43% { transform: scaleY(0.1); }
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scaleY(1); box-shadow: 0 0 10px 5px var(--flame-glow); }
+            50% { transform: translateX(-50%) scaleY(0.9); box-shadow: 0 0 8px 4px var(--flame-glow); }
+            100% { transform: translateX(-50%) scaleY(1.1); box-shadow: 0 0 12px 6px var(--flame-glow); }
+        }
+
+        /* 📢 Botón */
+        .birthday-button {
+            position: absolute;
+            bottom: -50px;
+            padding: 10px 20px;
+            border: 2px solid var(--eye);
+            background: #FFEC9E;
+            cursor: pointer;
+            border-radius: 15px; 
+            font-weight: bold;
+            box-shadow: 0 3px 0 var(--eye);
+            transition: transform 0.1s;
+        }
+
+        .birthday-button:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        /* 💌 Mensaje Especial */
+        .message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            border: 5px solid var(--tongue);
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .message-box.show {
             opacity: 1;
+            visibility: visible;
         }
-        100% {
-            transform: translateX(-50%) translateY(-120px) scale(1.4);
-            opacity: 0;
+
+        .message-box h2 {
+            color: var(--tongue);
+            margin-top: 0;
         }
-    }
 
-    /* --- POEMA --- */
-    .poema {
-        margin-top: 40px;
-        text-align: center;
-        font-size: 20px;
-        max-width: 400px;
-        color: #5a3971;
-        animation: aparecer 2s ease forwards;
-        opacity: 0;
-    }
-
-    @keyframes aparecer {
-        to { opacity: 1; }
-    }
-</style>
+        .message-box p {
+            font-size: 1.2em;
+            color: var(--eye);
+        }
+    </style>
 </head>
 <body>
+    <div class="birthday-cake" id="cake">
+        <div class="cake-body">
+            <div class="sprinkle sprinkle-1"></div>
+            <div class="sprinkle sprinkle-2"></div>
+            <div class="sprinkle sprinkle-3"></div>
+            <div class="sprinkle sprinkle-4"></div>
+            <div class="sprinkle sprinkle-5"></div>
+            <div class="sprinkle sprinkle-6"></div>
+            
+            <div class="face" id="face">
+                <div class="eye eye-left"></div>
+                <div class="eye eye-right"></div>
+                <div class="mouth"></div>
+            </div>
+        </div>
 
-<div class="contenedor">
-    <div class="sobre" onclick="abrir()">
-        <div class="tapa"></div>
-
-        <!-- Corazón oculto hasta que se abre -->
-        <div class="corazon" id="corazon">❤️</div>
-
-        <div class="carta">
-            <h2 style="margin:0; color:#a34fd8;">Perdón</h2>
-            <p style="font-size:14px; color:#444;">(Haz clic para abrir)</p>
+        <div class="candles" id="candles">
+            <div class="candle candle-1">
+                <div class="flame"></div>
+            </div>
+            <div class="candle candle-2">
+                <div class="flame"></div>
+            </div>
+            <div class="candle candle-3">
+                <div class="flame"></div>
+            </div>
         </div>
     </div>
 
-    <div class="poema" id="poema" style="display:none;">
-        <p>
-            Perdón si mis palabras <br>
-            alguna vez se volvieron espinas, <br>
-            si mis silencios fueron frío <br>
-            y mis errores te hicieron distancia. <br><br>
+    <button class="birthday-button" id="blowButton">¡Pide un Deseo!</button>
 
-            Hoy abro mi corazón como esta carta, <br>
-            sin miedo, sin orgullo, sin excusas. <br>
-            Solo un sentimiento sincero: <br>
-            que me importas… y que lo siento. 💜
+    <div class="message-box" id="messageBox">
+        <h2>🎉 ¡FELIZ CUMPLEAÑOS, MI MEJOR AMIGA! 💖</h2>
+        <p>
+            En este día tan especial, quiero que sepas lo increíble que eres.<br>
+            Gracias por cada risa, cada consejo y por ser la persona más leal del mundo.<br>
+            ¡Que la vida te dé tanta felicidad como tú me das a mí!<br>
+            **¡Te quiero muchísimo!**
         </p>
     </div>
-</div>
 
-<script>
-function abrir() {
-    const sobre = document.querySelector('.sobre');
-    const poema = document.getElementById('poema');
-    const corazon = document.getElementById('corazon');
+    <script>
+        const blowButton = document.getElementById('blowButton');
+        const flames = document.querySelectorAll('.flame');
+        const messageBox = document.getElementById('messageBox');
+        const cakeFace = document.getElementById('face');
+        
+        let hasBlown = false;
 
-    sobre.classList.toggle('abierto');
+        blowButton.addEventListener('click', () => {
+            if (hasBlown) return; // Evita hacer clic varias veces
 
-    if (sobre.classList.contains('abierto')) {
-        setTimeout(() => {
-            poema.style.display = "block";
-            corazon.classList.add("animar");
-        }, 600);
+            // 1. Apagar las velas
+            flames.forEach(flame => {
+                flame.classList.add('off');
+            });
 
-        setTimeout(() => {
-            corazon.classList.remove("animar");
-        }, 3000);
+            // 2. Mostrar el mensaje
+            // Esconder el pastel temporalmente para que el mensaje sea el foco
+            document.getElementById('cake').style.opacity = '0.1'; 
+            
+            // Mostrar la caja de mensaje
+            messageBox.classList.add('show');
+            
+            // 3. Cambiar el texto del botón
+            blowButton.textContent = '¡Deseo Concedido!';
+            
+            // 4. Animación Kawaii: hacer que el pastel se vea muy feliz/sorprendido (Opcional)
+            cakeFace.style.transform = 'translate(-50%, -50%) scale(1.1)';
+            
+            // 5. Reproducir un sonido (si pudieras, aquí iría, pero lo simulamos con un texto)
+            console.log("Sonido de soplido de vela y aplausos.");
 
-    } else {
-        poema.style.display = "none";
-    }
-}
-</script>
+            hasBlown = true;
+        });
 
+    </script>
 </body>
 </html>
