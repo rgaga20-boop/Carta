@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastel Kawaii Interactivo para mi Mejor Amiga</title>
+    <title>Pastel De cumpleaños, Para wendys</title>
     <style>
         /* 🌸 Variables Kawaii y Animaciones (Mantenidas) */
         :root {
@@ -75,7 +75,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.5s; /* Para el efecto de "sorpresa" o "alegría" al apagarse */
+            transition: transform 0.5s;
         }
 
         .eye {
@@ -168,7 +168,7 @@
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             box-shadow: 0 0 10px 5px var(--flame-glow);
             animation: flicker 0.5s infinite alternate;
-            transition: opacity 0.3s; /* Para que se apague suavemente */
+            transition: opacity 0.3s;
         }
 
         /* Clase para apagar las velas */
@@ -190,9 +190,10 @@
             100% { transform: translateX(-50%) scaleY(1.1); box-shadow: 0 0 12px 6px var(--flame-glow); }
         }
 
-        /* 📢 Botón */
+        /* 📢 Botón - ¡CAMBIOS AQUÍ! */
         .birthday-button {
             position: absolute;
+            /* CAMBIO: Mayor elevación - Aumentamos la sombra (5px en lugar de 3px) */
             bottom: -50px;
             padding: 10px 20px;
             border: 2px solid var(--eye);
@@ -200,16 +201,17 @@
             cursor: pointer;
             border-radius: 15px; 
             font-weight: bold;
-            box-shadow: 0 3px 0 var(--eye);
+            box-shadow: 0 5px 0 var(--eye); /* CAMBIO: 5px de sombra vertical */
             transition: transform 0.1s;
         }
 
         .birthday-button:active {
-            transform: translateY(3px);
+            /* CAMBIO: Mayor elevación - Hacemos que se hunda más (5px en lugar de 3px) */
+            transform: translateY(5px); 
             box-shadow: none;
         }
 
-        /* 💌 Mensaje Especial */
+        /* 💌 Mensaje Especial (Mantenido) */
         .message-box {
             position: absolute;
             top: 50%;
@@ -276,12 +278,12 @@
     <button class="birthday-button" id="blowButton">¡Pide un Deseo!</button>
 
     <div class="message-box" id="messageBox">
-        <h2>🎉 ¡FELIZ CUMPLEAÑOS, MI MEJOR AMIGA! 💖</h2>
+        <h2>🎉 ¡FELIZ CUMPLEAÑOS, WENDYY :D! 💖</h2>
         <p>
             En este día tan especial, quiero que sepas lo increíble que eres.<br>
-            Gracias por cada risa, cada consejo y por ser la persona más leal del mundo.<br>
-            ¡Que la vida te dé tanta felicidad como tú me das a mí!<br>
-            **¡Te quiero muchísimo!**
+            Gracias por cada risa, cada consejo y por ser la persona mas linda del mundo<br>
+            hice esto para felicitarte y espero y sigas cumpliendo muchos mas<br>
+            **¡Te quiero muchisimo 🫶🏻!**
         </p>
     </div>
 
@@ -294,7 +296,7 @@
         let hasBlown = false;
 
         blowButton.addEventListener('click', () => {
-            if (hasBlown) return; // Evita hacer clic varias veces
+            if (hasBlown) return;
 
             // 1. Apagar las velas
             flames.forEach(flame => {
@@ -302,19 +304,15 @@
             });
 
             // 2. Mostrar el mensaje
-            // Esconder el pastel temporalmente para que el mensaje sea el foco
-            document.getElementById('cake').style.opacity = '0.1'; 
-            
-            // Mostrar la caja de mensaje
+            document.getElementById('cake').style.opacity = '0.1';
             messageBox.classList.add('show');
             
             // 3. Cambiar el texto del botón
             blowButton.textContent = '¡Deseo Concedido!';
             
-            // 4. Animación Kawaii: hacer que el pastel se vea muy feliz/sorprendido (Opcional)
+            // 4. Animación Kawaii
             cakeFace.style.transform = 'translate(-50%, -50%) scale(1.1)';
             
-            // 5. Reproducir un sonido (si pudieras, aquí iría, pero lo simulamos con un texto)
             console.log("Sonido de soplido de vela y aplausos.");
 
             hasBlown = true;
