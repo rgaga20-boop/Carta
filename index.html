@@ -1,225 +1,376 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>¿Me sigues queriendo?</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GGRepairShop - Reparación Profesional</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-  :root{
-    --pink-1: #ffe5ec;
-    --pink-2: #ffcce0;
-    --accent: #b3005e;
-    --soft: #ffb6c1;
-  }
+    body {
+      background-color: #f3f4f6;
+      color: #333;
+    }
 
-  html,body{
-    height:100%;
-    margin:0;
-    font-family: "Press Start 2P", cursive;
-    background: linear-gradient(135deg, var(--pink-1), var(--pink-2));
-    color: var(--accent);
-    overflow:hidden;
-  }
+    header {
+      background-color: #4e178b;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+    }
 
-  .stage {
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-  }
+    header h1 {
+      font-size: 1.8em;
+      margin-bottom: 5px;
+    }
 
-  .card {
-    width:100%;
-    max-width:720px;
-    background: rgba(255,245,247,0.95);
-    border: 6px solid var(--accent);
-    box-shadow: 10px 10px 0 var(--soft);
-    padding:28px;
-    border-radius:8px;
-    position:relative;
-    text-align:center;
-  }
+    nav {
+      background-color: #006fd6;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-  h1{
-    margin:0 0 18px 0;
-    font-size:20px;
-    letter-spacing:1px;
-    color:var(--accent);
-    text-shadow: 2px 2px #fff;
-  }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      transition: background 0.3s;
+    }
 
-  p.subtitle{
-    margin:0 0 20px 0;
-    font-size:11px;
-  }
+    nav a:hover {
+      background-color: #4e178b;
+    }
 
-  .play-area{
-    position:relative;
-    height:300px;
-    margin-top:18px;
-    background: linear-gradient(180deg, rgba(255,230,238,0.4), rgba(255,220,232,0.3));
-    border-radius:6px;
-    border:3px dashed rgba(179,0,94,0.15);
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1603782922263-9fa11752d0c2?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
 
-  .btn {
-    -webkit-tap-highlight-color: transparent;
-    user-select:none;
-    cursor:pointer;
-    background: #ffe3ed;
-    border: 4px solid var(--accent);
-    padding: 14px 28px;
-    font-size:13px;
-    border-radius:6px;
-    box-shadow: 6px 6px 0 var(--soft);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, all 0.2s;
-  }
-  .btn:active { transform: translateY(2px); box-shadow: 4px 4px 0 var(--soft); }
+    .hero h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 5px #000;
+    }
 
-  .buttons-row {
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-    width: 80%;
-    max-width: 350px;
-  }
+    .hero p {
+      font-size: 1.1em;
+      text-shadow: 1px 1px 4px #000;
+    }
 
-  .message {
-    margin-top:18px;
-    font-size:11px;
-    min-height:20px;
-  }
+    section {
+      padding: 40px 20px;
+      text-align: center;
+    }
 
-  canvas.fireworks {
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    pointer-events:none;
-    z-index:100;
-  }
+    .servicios {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
 
-  @media (max-width:600px){
-    h1{ font-size:14px; }
-    .btn{ font-size:11px; padding:10px 20px; }
-    .card{ padding:20px; }
-    .play-area{ height:220px; }
-  }
-</style>
+    .servicio {
+      background: rgb(255, 255, 255);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .servicio:hover {
+      transform: translateY(-5px);
+    }
+
+    .servicio h3 {
+      color: #4e178b;
+      margin-bottom: 10px;
+    }
+
+    .btn-servicio {
+      background-color: #006fd6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+      font-size: 0.95em;
+    }
+
+    .btn-servicio:hover {
+      background-color: #4e178b;
+    }
+
+    .detalle-servicio {
+      max-width: 800px;
+      margin: 30px auto;
+      text-align: left;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .imagen-placeholder {
+      width: 100%;
+      height: 300px;
+      background-color: #e5e7eb;
+      border: 2px dashed #006fd6;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      color: #666;
+      font-size: 1.1em;
+    }
+
+    .detalle-servicio h3 {
+      color: #4e178b;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .detalle-servicio ul {
+      margin-left: 20px;
+      line-height: 1.8;
+    }
+
+    .contacto {
+      background-color: #e5f1ff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .contacto h3 {
+      margin-bottom: 10px;
+      color: #4e178b;
+    }
+
+    footer {
+      background-color: #4e178b;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 1.5em;
+      }
+      .hero p {
+        font-size: 1em;
+      }
+    }
+  </style>
 </head>
 <body>
-  <canvas class="fireworks" id="fireCanvas"></canvas>
-  <div class="stage">
-    <div class="card">
-      <h1 id="pregunta">¿Me sigues queriendo?</h1>
-      <p class="subtitle">Elige una opción</p>
 
-      <div class="play-area" id="playArea">
-        <div class="buttons-row">
-          <button id="btnSi" class="btn">SÍ</button>
-          <button id="btnNo" class="btn">NO</button>
-        </div>
+  <header>
+    <h1>GGRepairShop</h1>
+    <p>Reparamos tu tecnología, devolvemos tu tranquilidad</p>
+  </header>
+
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section class="hero" id="inicio">
+    <h2>¡Tu dispositivo en las mejores manos!</h2>
+    <p>Reparación rápida, segura y garantizada de celulares, laptops, computadoras y tablets.</p>
+  </section>
+
+  <section id="servicios">
+    <h2>Nuestros Servicios</h2>
+    <div class="imagen-placeholder">Aqui tambien poner image</div>
+    <div class="servicios">
+      <div class="servicio">
+        <h3>Celulares</h3>
+        <p>Cambio de pantalla, batería, carga y más para todas las marcas.</p>
+        <button class="btn-servicio" data-href="#celulares">Ver más</button>
       </div>
-
-      <div class="message" id="msg"></div>
+      <div class="servicio">
+        <h3>Laptops</h3>
+        <p>Mantenimiento, formateo, cambio de teclado, limpieza interna y más.</p>
+        <button class="btn-servicio" data-href="#laptops">Ver más</button>
+      </div>
+      <div class="servicio">
+        <h3>Computadoras</h3>
+        <p>Actualización de hardware, instalación de software y reparación general.</p>
+        <button class="btn-servicio" data-href="#computadoras">Ver más</button>
+      </div>
+      <div class="servicio">
+        <h3>Tablets</h3>
+        <p>Reparación de pantallas, puertos de carga y actualización del sistema.</p>
+        <button class="btn-servicio" data-href="#tablets">Ver más</button>
+      </div>
     </div>
-  </div>
+  </section>
 
-<script>
-const btnNo = document.getElementById('btnNo');
-const btnSi = document.getElementById('btnSi');
-const msg = document.getElementById('msg');
-const pregunta = document.getElementById('pregunta');
-let scale = 1.0;
+  <section id="celulares">
+    <h2>Servicio de Celulares</h2>
+    <div class="detalle-servicio">
+      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
+      
+      <h3>¿Qué ofrecemos?</h3>
+      <p>En GGRepairShop contamos con especialistas en reparación de celulares de todas las marcas. Utilizamos repuestos de calidad y tecnología moderna para devolverte tu dispositivo en perfectas condiciones.</p>
+      
+      <h3>Servicios disponibles:</h3>
+      <ul>
+        <li>Cambio de pantalla/cristal</li>
+        <li>Reemplazo de batería</li>
+        <li>Reparación de puerto de carga</li>
+        <li>Cambio de cámara</li>
+        <li>Reparación de micrófono</li>
+        <li>Recuperación de datos</li>
+        <li>Limpieza interna</li>
+      </ul>
+      
+      <h3>Marcas que reparamos:</h3>
+      <ul>
+        <li>Apple iPhone</li>
+        <li>Samsung</li>
+        <li>Xiaomi</li>
+        <li>Huawei</li>
+        <li>Motorola</li>
+        <li>Oppo y otras marcas</li>
+      </ul>
 
-// fuegos artificiales
-const canvas = document.getElementById('fireCanvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
+      <p><a href="#servicios">← Volver a Servicios</a></p>
+    </div>
+  </section>
 
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+  <section id="laptops">
+    <h2>Servicio de Laptops</h2>
+    <div class="detalle-servicio">
+      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
+      
+      <h3>¿Qué ofrecemos?</h3>
+      <p>Ofrecemos servicio integral de reparación y mantenimiento para laptops de cualquier marca. Desde problemas de software hasta reparaciones de hardware, nuestro equipo técnico está capacitado para solucionarlo.</p>
+      
+      <h3>Servicios disponibles:</h3>
+      <ul>
+        <li>Cambio de teclado</li>
+        <li>Reemplazo de pantalla</li>
+        <li>Limpieza interna y cambio de pasta térmica</li>
+        <li>Instalación de SSD</li>
+        <li>Aumento de memoria RAM</li>
+        <li>Formateo e instalación de sistema operativo</li>
+        <li>Reparación de puerto HDMI/USB</li>
+        <li>Reparación de batería</li>
+      </ul>
+      
+      <h3>Marcas que reparamos:</h3>
+      <ul>
+        <li>Dell</li>
+        <li>HP</li>
+        <li>Lenovo</li>
+        <li>ASUS</li>
+        <li>Acer</li>
+        <li>Apple MacBook</li>
+        <li>MSI y otras marcas</li>
+      </ul>
 
-function Firework(x, y, color){
-  this.x = x;
-  this.y = y;
-  this.color = color;
-  this.radius = 2 + Math.random()*2;
-  this.vx = (Math.random() - 0.5) * 6;
-  this.vy = (Math.random() - 0.5) * 6;
-  this.alpha = 1;
-}
-Firework.prototype.update = function(){
-  this.x += this.vx;
-  this.y += this.vy;
-  this.alpha -= 0.015;
-};
+      <p><a href="#servicios">← Volver a Servicios</a></p>
+    </div>
+  </section>
 
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach((p,i)=>{
-    ctx.globalAlpha = p.alpha;
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
-    ctx.fill();
-    p.update();
-    if (p.alpha <= 0) particles.splice(i,1);
-  });
-  requestAnimationFrame(animate);
-}
-animate();
+  <section id="computadoras">
+    <h2>Servicio de Computadoras</h2>
+    <div class="detalle-servicio">
+      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
+      
+      <h3>¿Qué ofrecemos?</h3>
+      <p>Brindamos servicios de reparación y actualización de computadoras de escritorio. Mejoramos el rendimiento de tu equipo y solucionamos cualquier problema técnico que presentes.</p>
+      
+      <h3>Servicios disponibles:</h3>
+      <ul>
+        <li>Actualización de procesador/placa madre</li>
+        <li>Aumento de memoria RAM</li>
+        <li>Instalación de SSD o disco duro</li>
+        <li>Limpieza interna y reemplazo de pasta térmica</li>
+        <li>Reparación de fuente de poder</li>
+        <li>Instalación de sistema operativo</li>
+        <li>Diagnóstico de problemas de hardware</li>
+        <li>Instalación de software y programas</li>
+      </ul>
+      
+      <h3>Lo que hacemos:</h3>
+      <ul>
+        <li>Aumentar rendimiento de tu equipo</li>
+        <li>Reparar problemas de sobrecalentamiento</li>
+        <li>Solucionar errores del sistema</li>
+        <li>Mejorar velocidad de inicio</li>
+        <li>Recuperación de datos</li>
+      </ul>
 
-function crearFuegos(x,y){
-  for(let i=0;i<40;i++){
-    const color = `hsl(${Math.random()*360},100%,60%)`;
-    particles.push(new Firework(x,y,color));
-  }
-}
+      <p><a href="#servicios">← Volver a Servicios</a></p>
+    </div>
+  </section>
 
-function reproducirSonido(){
-  const ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
-  const osc = ctxAudio.createOscillator();
-  const gain = ctxAudio.createGain();
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(660, ctxAudio.currentTime);
-  gain.gain.setValueAtTime(0.2, ctxAudio.currentTime);
-  osc.connect(gain);
-  gain.connect(ctxAudio.destination);
-  osc.start();
-  osc.stop(ctxAudio.currentTime + 0.2);
-}
+  <section id="tablets">
+    <h2>Servicio de Tablets</h2>
+    <div class="detalle-servicio">
+      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
+      
+      <h3>¿Qué ofrecemos?</h3>
+      <p>Especialistas en reparación de tablets de todas las marcas y sistemas operativos. Contamos con repuestos originales y garantía en nuestros trabajos.</p>
+      
+      <h3>Servicios disponibles:</h3>
+      <ul>
+        <li>Reparación de pantalla LCD/LED</li>
+        <li>Reemplazo de batería</li>
+        <li>Reparación de puerto de carga USB</li>
+        <li>Cambio de botones y parlantes</li>
+        <li>Reparación de cámara frontal y trasera</li>
+        <li>Actualización de sistema operativo</li>
+        <li>Limpieza y mantenimiento</li>
+        <li>Recuperación de datos</li>
+      </ul>
+      
+      <h3>Marcas que reparamos:</h3>
+      <ul>
+        <li>Apple iPad</li>
+        <li>Samsung Galaxy Tab</li>
+        <li>Huawei MediaPad</li>
+        <li>Lenovo Tab</li>
+        <li>Amazon Fire Tablet</li>
+        <li>Otras marcas disponibles</li>
+      </ul>
 
-// Botón "SÍ"
-btnSi.addEventListener('click', () => {
-  msg.textContent = '¡Sii! Sabía que sí 💖';
-  reproducirSonido();
-  crearFuegos(window.innerWidth/2, window.innerHeight/2);
-  pregunta.textContent = '¡Me haces muy feliz!';
-  btnNo.style.display = 'none';
-});
+      <p><a href="#servicios">← Volver a Servicios</a></p>
+    </div>
+  </section>
 
-// Botón "NO"
-btnNo.addEventListener('click', () => {
-  scale += 0.3; // cada vez más grande
-  btnSi.style.transform = `scale(${scale})`;
-  pregunta.textContent = '¿Segura? 😢';
-  msg.textContent = '';
-  
-  setTimeout(() => {
-    pregunta.textContent = '¿Me sigues queriendo?';
-  }, 1200);
-});
-</script>
+  <section id="contacto">
+    <h2>Contáctanos</h2>
+    <div class="contacto">
+      <h3>GGRepairShop</h3>
+      <p>📍 Dirección: -----------------</p>
+      <p>📞 Teléfono: +52 624 217 6164</p>
+      <p>✉️ Email: gg.ramon03@gmail.com</p>
+      <p>🕒 Horario: Lunes a Sábado - 9:00 AM a 7:00 PM</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 GGRepairShop - Todos los derechos reservados.
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
