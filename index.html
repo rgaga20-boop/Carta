@@ -132,7 +132,7 @@
      class="password-img" 
      style="width: 300px; height: auto;">
   <h2>🔒 Ingresa la contraseña</h2>
-  <div class="input-display" id="inputDisplay">••••</div>
+  <div class="input-display" id="inputDisplay">••••••</div>
   <div class="keypad">
     <button class="key" onclick="enterDigit('1')">1</button>
     <button class="key" onclick="enterDigit('2')">2</button>
@@ -162,7 +162,7 @@
 
 <p style="text-align: justify;">
   Quiero que sepas lo feliz que soy por tenerte en mi vida. Desde que llegaste, todo cambió para mejor.
-  Me haces sentir amado, cuidado y acompañado de una forma que nunca antes había sentido.
+  Me haces sentir amada, cuidada y acompañada de una forma que nunca antes había sentido.
 </p>
 
 <p style="text-align: justify;">
@@ -201,11 +201,11 @@
   }
   crearCorazones();
 
-  const correctPassword = '0105';
+  const correctPassword = '010526';
   let input = '';
 
   function enterDigit(digit) {
-    if (input.length < 4) {
+    if (input.length < 6) {
       input += digit;
       updateDisplay();
     }
@@ -217,11 +217,11 @@
   }
 
   function updateDisplay() {
-    document.getElementById('inputDisplay').textContent = input.padEnd(4, '•');
+    document.getElementById('inputDisplay').textContent = input.padEnd(6, '•');
   }
 
   function checkPassword() {
-    if (input.length === 4) {
+    if (input.length === 6) {
       if (input === correctPassword) {
         document.getElementById('passwordScreen').classList.remove('active');
         document.getElementById('notepadScreen').classList.add('active');
@@ -231,7 +231,7 @@
         updateDisplay();
       }
     } else {
-      alert('Debes ingresar los 4 dígitos.');
+      alert('Debes ingresar los 6 dígitos.');
     }
   }
 
