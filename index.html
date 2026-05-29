@@ -1,376 +1,246 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GGRepairShop - Reparación Profesional</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta Secreta 2 by myeya</title>
   <style>
-    * {
+    body {
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+      background-color: rgb(194, 197, 197); 
+      overflow-x: hidden;
     }
-
-    body {
-      background-color: #f3f4f6;
-      color: #333;
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
-
-    header {
-      background-color: #4e178b;
-      color: white;
-      padding: 15px 20px;
-      text-align: center;
+    .heart {
+      position: absolute;
+      animation: fall linear forwards;
+      color: rgba(255,0,0,0.6);
     }
-
-    header h1 {
-      font-size: 1.8em;
-      margin-bottom: 5px;
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
-
-    nav {
-      background-color: #006fd6;
-      display: flex;
+    .screen {
+      display: none;
       justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 15px;
-      transition: background 0.3s;
-    }
-
-    nav a:hover {
-      background-color: #4e178b;
-    }
-
-    .hero {
-      background: url('https://images.unsplash.com/photo-1603782922263-9fa11752d0c2?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
-      color: white;
+      align-items: center;
+      height: 100vh;
       text-align: center;
-      padding: 80px 20px;
+      flex-direction: column;
+      position: relative;
+      z-index: 2;
     }
-
-    .hero h2 {
-      font-size: 2em;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 5px #000;
+    .active {
+      display: flex;
     }
-
-    .hero p {
-      font-size: 1.1em;
-      text-shadow: 1px 1px 4px #000;
+    .password-screen {
+      flex-direction: column;
     }
-
-    section {
-      padding: 40px 20px;
-      text-align: center;
-    }
-
-    .servicios {
+    .keypad {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(3, 60px);
+      gap: 10px;
       margin-top: 20px;
+      justify-content: center;
     }
-
-    .servicio {
-      background: rgb(255, 255, 255);
-      padding: 20px;
+    .key {
+      background-color: white;
+      border: none;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
+      font-size: 20px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
     }
-
-    .servicio:hover {
-      transform: translateY(-5px);
+    .key:hover {
+      background-color: #e6f0f5;
+      transform: translateY(-3px);
     }
-
-    .servicio h3 {
-      color: #4e178b;
-      margin-bottom: 10px;
+    .input-display {
+      font-size: 24px;
+      margin-top: 20px;
+      letter-spacing: 8px;
     }
-
-    .btn-servicio {
-      background-color: #006fd6;
-      color: white;
+    .notepad {
+      background-color: #f9f9f9;
+      border: 3px solid #000000;
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      line-height: 1.6;
+      box-shadow: 8px 8px 15px rgba(0,0,0,0.2);
+    }
+    .notepad h3 {
+      margin-top: 0;
+    }
+    .password-img {
+      width: 260px; 
+      height: 150px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 6px 6px 15px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+    .note-img {
+      width: 100%;
+      max-width: 450px;
+      height: auto;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background-color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 5px;
+      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.3s;
-      font-size: 0.95em;
+      box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s ease;
     }
-
-    .btn-servicio:hover {
-      background-color: #4e178b;
-    }
-
-    .detalle-servicio {
-      max-width: 800px;
-      margin: 30px auto;
-      text-align: left;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .imagen-placeholder {
-      width: 100%;
-      height: 300px;
-      background-color: #e5e7eb;
-      border: 2px dashed #006fd6;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 20px 0;
-      color: #666;
-      font-size: 1.1em;
-    }
-
-    .detalle-servicio h3 {
-      color: #4e178b;
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
-
-    .detalle-servicio ul {
-      margin-left: 20px;
-      line-height: 1.8;
-    }
-
-    .contacto {
-      background-color: #e5f1ff;
-      border-radius: 10px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .contacto h3 {
-      margin-bottom: 10px;
-      color: #4e178b;
-    }
-
-    footer {
-      background-color: #4e178b;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 600px) {
-      .hero h2 {
-        font-size: 1.5em;
-      }
-      .hero p {
-        font-size: 1em;
-      }
+    .back-btn:hover {
+      background-color: #ded8d8;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
+<div class="hearts"></div>
 
-  <header>
-    <h1>GGRepairShop</h1>
-    <p>Reparamos tu tecnología, devolvemos tu tranquilidad</p>
-  </header>
+<div id="passwordScreen" class="screen password-screen active">
+<img src="https://acortar.link/el8Gwt" 
+     alt="Imagen decorativa" 
+     class="password-img" 
+     style="width: 300px; height: auto;">
+  <h2>🔒 Ingresa la contraseña</h2>
+  <div class="input-display" id="inputDisplay">••••</div>
+  <div class="keypad">
+    <button class="key" onclick="enterDigit('1')">1</button>
+    <button class="key" onclick="enterDigit('2')">2</button>
+    <button class="key" onclick="enterDigit('3')">3</button>
+    <button class="key" onclick="enterDigit('4')">4</button>
+    <button class="key" onclick="enterDigit('5')">5</button>
+    <button class="key" onclick="enterDigit('6')">6</button>
+    <button class="key" onclick="enterDigit('7')">7</button>
+    <button class="key" onclick="enterDigit('8')">8</button>
+    <button class="key" onclick="enterDigit('9')">9</button>
+    <button class="key" onclick="checkPassword()">✔️</button>
+    <button class="key" onclick="enterDigit('0')">0</button>
+    <button class="key" onclick="deleteLast()">⌫</button>
 
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#servicios">Servicios</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
+  </div>
+</div>
 
-  <section class="hero" id="inicio">
-    <h2>¡Tu dispositivo en las mejores manos!</h2>
-    <p>Reparación rápida, segura y garantizada de celulares, laptops, computadoras y tablets.</p>
-  </section>
+<div id="notepadScreen" class="screen">
+  <div class="notepad" style="text-align: center;">
+    <img src="https://acortar.link/HZbeah" 
+         alt="Imagen decorativa" 
+         class="password-img"
+         style="max-width: 100%; height: auto;">
 
-  <section id="servicios">
-    <h2>Nuestros Servicios</h2>
-    <div class="imagen-placeholder">Aqui tambien poner image</div>
-    <div class="servicios">
-      <div class="servicio">
-        <h3>Celulares</h3>
-        <p>Cambio de pantalla, batería, carga y más para todas las marcas.</p>
-        <button class="btn-servicio" data-href="#celulares">Ver más</button>
-      </div>
-      <div class="servicio">
-        <h3>Laptops</h3>
-        <p>Mantenimiento, formateo, cambio de teclado, limpieza interna y más.</p>
-        <button class="btn-servicio" data-href="#laptops">Ver más</button>
-      </div>
-      <div class="servicio">
-        <h3>Computadoras</h3>
-        <p>Actualización de hardware, instalación de software y reparación general.</p>
-        <button class="btn-servicio" data-href="#computadoras">Ver más</button>
-      </div>
-      <div class="servicio">
-        <h3>Tablets</h3>
-        <p>Reparación de pantallas, puertos de carga y actualización del sistema.</p>
-        <button class="btn-servicio" data-href="#tablets">Ver más</button>
-      </div>
-    </div>
-  </section>
+<h3 style="text-align: left; margin-bottom: 0;">📅 29 de Mayo 20206</h3>
+<h4 style="text-align: left; margin-top: 0;">💌 For My Queen</h4>
 
-  <section id="celulares">
-    <h2>Servicio de Celulares</h2>
-    <div class="detalle-servicio">
-      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
-      
-      <h3>¿Qué ofrecemos?</h3>
-      <p>En GGRepairShop contamos con especialistas en reparación de celulares de todas las marcas. Utilizamos repuestos de calidad y tecnología moderna para devolverte tu dispositivo en perfectas condiciones.</p>
-      
-      <h3>Servicios disponibles:</h3>
-      <ul>
-        <li>Cambio de pantalla/cristal</li>
-        <li>Reemplazo de batería</li>
-        <li>Reparación de puerto de carga</li>
-        <li>Cambio de cámara</li>
-        <li>Reparación de micrófono</li>
-        <li>Recuperación de datos</li>
-        <li>Limpieza interna</li>
-      </ul>
-      
-      <h3>Marcas que reparamos:</h3>
-      <ul>
-        <li>Apple iPhone</li>
-        <li>Samsung</li>
-        <li>Xiaomi</li>
-        <li>Huawei</li>
-        <li>Motorola</li>
-        <li>Oppo y otras marcas</li>
-      </ul>
+<p style="text-align: justify;">
+  Quiero que sepas lo feliz que soy por tenerte en mi vida. Desde que llegaste, todo cambió para mejor.
+  Me haces sentir amada, cuidada y acompañada de una forma que nunca antes había sentido.
+</p>
 
-      <p><a href="#servicios">← Volver a Servicios</a></p>
-    </div>
-  </section>
+<p style="text-align: justify;">
+  A tu lado aprendí lo que es el amor verdadero, ese que se demuestra con acciones, con palabras sinceras
+  y con esos pequeños detalles que hacen la diferencia. Gracias por estar siempre conmigo, por darme tu
+  tiempo, tu cariño y tu comprensión.
+</p>
 
-  <section id="laptops">
-    <h2>Servicio de Laptops</h2>
-    <div class="detalle-servicio">
-      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
-      
-      <h3>¿Qué ofrecemos?</h3>
-      <p>Ofrecemos servicio integral de reparación y mantenimiento para laptops de cualquier marca. Desde problemas de software hasta reparaciones de hardware, nuestro equipo técnico está capacitado para solucionarlo.</p>
-      
-      <h3>Servicios disponibles:</h3>
-      <ul>
-        <li>Cambio de teclado</li>
-        <li>Reemplazo de pantalla</li>
-        <li>Limpieza interna y cambio de pasta térmica</li>
-        <li>Instalación de SSD</li>
-        <li>Aumento de memoria RAM</li>
-        <li>Formateo e instalación de sistema operativo</li>
-        <li>Reparación de puerto HDMI/USB</li>
-        <li>Reparación de batería</li>
-      </ul>
-      
-      <h3>Marcas que reparamos:</h3>
-      <ul>
-        <li>Dell</li>
-        <li>HP</li>
-        <li>Lenovo</li>
-        <li>ASUS</li>
-        <li>Acer</li>
-        <li>Apple MacBook</li>
-        <li>MSI y otras marcas</li>
-      </ul>
+<p style="text-align: justify;">
+  No sé cómo explicarlo, pero contigo mi corazón está en paz. Eres mi alegría diaria
+  y la razón de tantas sonrisas.
+</p>
 
-      <p><a href="#servicios">← Volver a Servicios</a></p>
-    </div>
-  </section>
+<p style="text-align: justify;">
+  Te amo profundamente. ♡
+</p>
 
-  <section id="computadoras">
-    <h2>Servicio de Computadoras</h2>
-    <div class="detalle-servicio">
-      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
-      
-      <h3>¿Qué ofrecemos?</h3>
-      <p>Brindamos servicios de reparación y actualización de computadoras de escritorio. Mejoramos el rendimiento de tu equipo y solucionamos cualquier problema técnico que presentes.</p>
-      
-      <h3>Servicios disponibles:</h3>
-      <ul>
-        <li>Actualización de procesador/placa madre</li>
-        <li>Aumento de memoria RAM</li>
-        <li>Instalación de SSD o disco duro</li>
-        <li>Limpieza interna y reemplazo de pasta térmica</li>
-        <li>Reparación de fuente de poder</li>
-        <li>Instalación de sistema operativo</li>
-        <li>Diagnóstico de problemas de hardware</li>
-        <li>Instalación de software y programas</li>
-      </ul>
-      
-      <h3>Lo que hacemos:</h3>
-      <ul>
-        <li>Aumentar rendimiento de tu equipo</li>
-        <li>Reparar problemas de sobrecalentamiento</li>
-        <li>Solucionar errores del sistema</li>
-        <li>Mejorar velocidad de inicio</li>
-        <li>Recuperación de datos</li>
-      </ul>
+    <button class="back-btn" onclick="goBack()">🔙 Inicio</button>
+  </div>
+</div>
 
-      <p><a href="#servicios">← Volver a Servicios</a></p>
-    </div>
-  </section>
+<script>
 
-  <section id="tablets">
-    <h2>Servicio de Tablets</h2>
-    <div class="detalle-servicio">
-      <div class="imagen-placeholder">Acordarme de poner imagen jaja</div>
-      
-      <h3>¿Qué ofrecemos?</h3>
-      <p>Especialistas en reparación de tablets de todas las marcas y sistemas operativos. Contamos con repuestos originales y garantía en nuestros trabajos.</p>
-      
-      <h3>Servicios disponibles:</h3>
-      <ul>
-        <li>Reparación de pantalla LCD/LED</li>
-        <li>Reemplazo de batería</li>
-        <li>Reparación de puerto de carga USB</li>
-        <li>Cambio de botones y parlantes</li>
-        <li>Reparación de cámara frontal y trasera</li>
-        <li>Actualización de sistema operativo</li>
-        <li>Limpieza y mantenimiento</li>
-        <li>Recuperación de datos</li>
-      </ul>
-      
-      <h3>Marcas que reparamos:</h3>
-      <ul>
-        <li>Apple iPad</li>
-        <li>Samsung Galaxy Tab</li>
-        <li>Huawei MediaPad</li>
-        <li>Lenovo Tab</li>
-        <li>Amazon Fire Tablet</li>
-        <li>Otras marcas disponibles</li>
-      </ul>
+  function crearCorazones() {
+    const heartsContainer = document.querySelector('.hearts');
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 8000);
+    }, 500);
+  }
+  crearCorazones();
 
-      <p><a href="#servicios">← Volver a Servicios</a></p>
-    </div>
-  </section>
+  const correctPassword = '0105';
+  let input = '';
 
-  <section id="contacto">
-    <h2>Contáctanos</h2>
-    <div class="contacto">
-      <h3>GGRepairShop</h3>
-      <p>📍 Dirección: -----------------</p>
-      <p>📞 Teléfono: +52 624 217 6164</p>
-      <p>✉️ Email: gg.ramon03@gmail.com</p>
-      <p>🕒 Horario: Lunes a Sábado - 9:00 AM a 7:00 PM</p>
-    </div>
-  </section>
+  function enterDigit(digit) {
+    if (input.length < 4) {
+      input += digit;
+      updateDisplay();
+    }
+  }
 
-  <footer>
-    © 2025 GGRepairShop - Todos los derechos reservados.
-  </footer>
+  function deleteLast() {
+    input = input.slice(0, -1);
+    updateDisplay();
+  }
 
-  <script src="script.js"></script>
+  function updateDisplay() {
+    document.getElementById('inputDisplay').textContent = input.padEnd(4, '•');
+  }
+
+  function checkPassword() {
+    if (input.length === 4) {
+      if (input === correctPassword) {
+        document.getElementById('passwordScreen').classList.remove('active');
+        document.getElementById('notepadScreen').classList.add('active');
+      } else {
+        alert('Contraseña incorrecta, intenta de nuevo');
+        input = '';
+        updateDisplay();
+      }
+    } else {
+      alert('Debes ingresar los 4 dígitos.');
+    }
+  }
+
+  function goBack() {
+    document.getElementById('notepadScreen').classList.remove('active');
+    document.getElementById('passwordScreen').classList.add('active');
+    input = '';
+    updateDisplay();
+  }
+</script>
 </body>
 </html>
